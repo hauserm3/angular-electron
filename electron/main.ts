@@ -1,7 +1,8 @@
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, ipcMain, IpcMessageEvent  } from 'electron';
 import * as path from 'path';
 import * as url from 'url';
 import { create } from 'domain';
+// const fs = require('fs');
 
 let win: BrowserWindow;
 
@@ -35,4 +36,12 @@ app.on('activate', () => {
   if (win === null) {
     createWindow();
   }
+});
+
+
+// Inter-process Communication (IPC)
+
+ipcMain.on('ping', (event: IpcMessageEvent) => {
+  console.log('ping');
+  event.sender.send('pong');
 });
